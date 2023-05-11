@@ -50,11 +50,12 @@ def process_message(messageSTR, keySTR, encryptionBOOL):
     e.g. messege = "l"; key = "h"; return = "Ô", encryptionBOOL = True   >>??
     '''
     processed_messageSTR = ""
+    
     if encryptionBOOL == True:
         target_message = encrypt_message #(letterSTR, keySTR)
     else:
         target_message = decrypt_message #(letterSTR, keySTR)  # correct??
-        
+    
     for indexINT, letterSTR in enumerate(messageSTR):
         key_letterSTR = keySTR[i %len(keySTR)]  #double check this concept in case I got confused
         processed_keySTR = target_message(letterSTR, key_letterSTR)
@@ -63,5 +64,15 @@ def process_message(messageSTR, keySTR, encryptionBOOL):
 
 
 if __name__ == "__main__":
-    testSTR = encrypt_messege("k", "o")
+    testSTR = encrypt_message("k", "o")
     print(testSTR)  # Is it like to use whatever key to produce/protext the message?
+    
+    test_letterSTR = "k"
+    test_keySTR = "o"
+    
+    decrypted_messageSTR = decrypt_message(encrypt_message(test_letterSTR, test_keySTR), test_keySTR)
+    
+    if test_letterSTR == decrypted_messageSTR:
+        print("function check SUCCEED.")
+    else:
+        print("function check FAIL.")
