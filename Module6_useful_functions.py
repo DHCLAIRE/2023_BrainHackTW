@@ -76,3 +76,9 @@ if __name__ == "__main__":
         print("function check SUCCEED.")
     else:
         print("function check FAIL.")
+        
+    test_messageSTR = "message"
+    test_keySTR = "key"
+    
+    encrypted_messageSTR = process_message(messageSTR, keySTR, encryptionBOOL=True)
+    decrypted_messageSTR_2 = process_message(processed_messageSTR, keySTR, encryptionBOOL=False)
