@@ -7,6 +7,8 @@
   - The semantic representation in speech comprehension
   - >> The relation of word embedding model (not sure which kind?) and neural response
 
+fracaltaity >> we can shuffle word, its POS, or other different traits.
+
 
 #### Week 1 (6 Modules) : Learning Mainly
 ##### Modules (** are the mandatory modules)
