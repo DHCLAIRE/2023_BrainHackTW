@@ -5,7 +5,7 @@
 - [ ] Proposal idea
   - The role of word prediction in speech comprehension
   - The semantic representation in speech comprehension
-  - >> The relation of word embedding model (not sure which kind?) and neural response
+  - The relation of word embedding model (not sure which kind?) and neural response
 
 fracaltaity >> we can shuffle word, its POS, or other different traits.
 5/24 (三) 和TA開會
