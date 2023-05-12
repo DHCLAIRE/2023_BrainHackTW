@@ -1,6 +1,12 @@
 # 2023 Brain Hack School Taiwan
 ***
-### (TEMP) Brainhack Taiwan 2023 Course Progess
+### Brainhack Taiwan 2023 Course Progess
+##### THE Project
+- [ ] Proposal idea
+  - The role of word prediction in speech comprehension
+  - The semantic representation in speech comprehension
+  - >> The relation of word embedding model (not sure which kind?) and neural response
+
 
 #### Week 1 (6 Modules) : Learning Mainly
 ##### Modules (** are the mandatory modules)
@@ -18,9 +24,6 @@
 - [ ] [Introduction to deep learning](https://school.brainhackmtl.org/modules/deep_learning_intro/)
 - [ ] `(Not sure)` [Deep learning for neuroimaging](https://school.brainhackmtl.org/modules/dl_for_neuroimaging/)
 - [ ] `(Not sure)` [DataLad for reproducible research data management](https://school.brainhackmtl.org/modules/datalad/)
-
-##### THE Project
-- [ ] Proposal idea??
 
 #### Week 3 (1 Modules) : Conduct the Project
 ##### Modules
