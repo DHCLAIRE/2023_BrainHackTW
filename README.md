@@ -4,7 +4,7 @@
 ##### THE Project
 - [x] Using calculated syntactical surprisals from Ngram model as a predictor in ESL speech comprehension analysis
 
-- [ ] To-do list
+- [ ] To-do list  
 5/24 (三) 和TA開會
 1. 介紹ngram計算過程
 2. my scripts
