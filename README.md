@@ -2,22 +2,18 @@
 ***
 ### Brainhack Taiwan 2023 Course Progess
 ##### THE Project
-- [ ] Proposal idea
-  - The role of word prediction in speech comprehension
-  - The semantic representation in speech comprehension
-  - The relation of word embedding model (not sure which kind?) and neural response
+- [x] Using calculated syntactical surprisals from Ngram model as a predictor in ESL speech comprehension analysis
 
-fracaltaity >> we can shuffle word, its POS, or other different traits.
+- [ ] To-do list
 5/24 (三) 和TA開會
 1. 介紹ngram計算過程
 2. my scripts
 3. 如何融合到TRF
 4. how to interpret the TRF results
 
-5/14(一)介紹我要做什麼 ＆ 大致想法 >> 1-2張ＰＰＴ
 
-
-
+***
+### Modules Progress
 #### Week 1 (6 Modules) : Learning Mainly
 ##### Modules (** are the mandatory modules)
 - [x] [**Installation of software](https://school.brainhackmtl.org/modules/installation/)
