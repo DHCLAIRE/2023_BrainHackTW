@@ -18,8 +18,8 @@ def main(input_path, keySTR, mode, output_path):
     '''
     
     # Open and then read the messege file according to its path
-    with open(messege_path, "r", encoding="utf-8") as messege_file:  
-        messegSTR = messege_file.read()
+    with open(input_path, "r", encoding="utf-8") as messege_file:
+        messegeSTR = messege_file.read()
     '''one-liner NOTE
     one-liner =>> messege_fileSTR = open(messege_path, "r", encoding="utf-8")
     one-liner will need to add => messege_fileSTR.close() after it.
@@ -29,7 +29,7 @@ def main(input_path, keySTR, mode, output_path):
     # set the mode as encryption
     encryptMODE = mode =="encryption"
     # process the messege by the self-defined func
-    processed_messegeSTR = process_message(messageSTR, keySTR, encryptMODE)
+    processed_messegeSTR = process_message(messegeSTR, keySTR, encryptMODE)
     #open a new file to save the processed messeges
     with open(output_path, "w", encoding="utf-8") as output_file:
         output_file.write(processed_messegeSTR)
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # For keySTR argument
     arg_parserFUNC.add_argument("-k", dest="keySTR", type=str, required=True, help="The keySTR for the messege.")
     # For the "mode" argument (An additional option for choices)
-    arg_parserFUNC.add_argument("-m", dest="mode", type=str, required=True, choices=["encrytion", "decryption"], help="To encrypt or decrypt the messege.")
+    arg_parserFUNC.add_argument("-m", dest="mode", type=str, required=True, choices=["encryption", "decryption"], help="To encrypt or decrypt the messege.")
     
     # To set the arguments' position??
     args = arg_parserFUNC.parse_args()
