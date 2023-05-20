@@ -2,20 +2,8 @@
 # -*- coding:utf-8 -*-
 
 from pprint import pprint
-import csv
-import json
-import random
-from random import sample
-import os
-from gtts import gTTS
-import pandas as pd
-import time
-from pathlib import Path
-import nltk
 import re
 import argparse
-#from nltk import sent_tokenize
-#from nltk import tokenize
 
 # Import the self-defined func from self-made script
 from Module6_1_useful_functions import process_message
@@ -51,13 +39,13 @@ if __name__ == "__main__":
     # Create the argument parser by functions in argparse(python module)
     arg_parserFUNC = argparse.ArgumentParser()
     # For input file argument
-    arg_parserFUNC.add_argument("-inputF", dest="input_path", type=str, required=True, help="The input path of the file.")
+    arg_parserFUNC.add_argument("-i", dest="input_path", type=str, required=True, help="The input path of the file.")
     # For input file argument
-    arg_parserFUNC.add_argument("-outputF", dest="output_path", type=str, required=True, help="The output path of the file.")
+    arg_parserFUNC.add_argument("-o", dest="output_path", type=str, required=True, help="The output path of the file.")
     # For keySTR argument
-    arg_parserFUNC.add_argument("-keySTR", dest="keySTR", type=str, required=True, help="The keySTR for the messege.")
+    arg_parserFUNC.add_argument("-k", dest="keySTR", type=str, required=True, help="The keySTR for the messege.")
     # For the "mode" argument (An additional option for choices)
-    arg_parserFUNC.add_argument("-mode", dest="mode", type=str, required=True, choices=["encrytion", "decryption"], help="To encrypt or decrypt the messege.")
+    arg_parserFUNC.add_argument("-m", dest="mode", type=str, required=True, choices=["encrytion", "decryption"], help="To encrypt or decrypt the messege.")
     
     # To set the arguments' position??
     args = arg_parserFUNC.parse_args()
