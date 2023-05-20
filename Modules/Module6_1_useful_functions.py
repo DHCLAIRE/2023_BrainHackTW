@@ -51,6 +51,7 @@ def process_message(messageSTR, keySTR, encryptionBOOL):
     '''
     processed_messageSTR = ""
     
+    # original command logic: message_processFUNC = encrypt_message if encryptionBOOL else decrypt_message (if-else one liner)
     if encryptionBOOL == True:
         message_processFUNC = encrypt_message #(letterSTR, keySTR)
     else:
