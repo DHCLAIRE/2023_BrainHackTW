@@ -77,11 +77,14 @@ if __name__ == "__main__":
     else:
         print("1st function check FAIL.")
         
-    test_messageSTR = "message"
-    test_keySTR = "key"
+    test_messageSTR = "coucou"
+    test_keySTR = "clef"
     
     encrypted_messageSTR = process_message(test_messageSTR, test_keySTR, encryptionBOOL=True)
     decrypted_messageSTR = process_message(encrypted_messageSTR, test_keySTR, encryptionBOOL=False)
+    
+    print(encrypted_messageSTR)
+    print(decrypted_messageSTR)
     
     if decrypted_messageSTR == test_messageSTR:
         print("2nd function check SUCCEED.")
