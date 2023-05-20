@@ -21,6 +21,7 @@
 - [x] [Writing scripts in python](https://school.brainhackmtl.org/modules/python_scripts/)  
 - [ ] [Machine learning - basics](https://school.brainhackmtl.org/modules/machine_learning_basics/)
 - [ ] [Data visualization](https://school.brainhackmtl.org/modules/python_visualization/)
+- [ ] [Project management](https://school-brainhack.github.io/modules/project_management/)
 
 #### Week 2 (3 Modules) : Learning Half; Proposed the project's proposal
 ##### Modules
