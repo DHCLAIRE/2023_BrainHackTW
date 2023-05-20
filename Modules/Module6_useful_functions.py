@@ -52,13 +52,13 @@ def process_message(messageSTR, keySTR, encryptionBOOL):
     processed_messageSTR = ""
     
     if encryptionBOOL == True:
-        target_message = encrypt_message #(letterSTR, keySTR)
+        message_processFUNC = encrypt_message #(letterSTR, keySTR)
     else:
-        target_message = decrypt_message #(letterSTR, keySTR)  # correct??
+        message_processFUNC = decrypt_message #(letterSTR, keySTR)  # correct??
     
     for indexINT, letterSTR in enumerate(messageSTR):
-        key_letterSTR = keySTR[i %len(keySTR)]  #double check this concept in case I got confused
-        processed_keySTR = target_message(letterSTR, key_letterSTR)
+        key_letterSTR = keySTR[indexINT %len(keySTR)]  #double check this concept in case I got confused
+        processed_keySTR = message_processFUNC(letterSTR, key_letterSTR)
         processed_messageSTR += processed_keySTR
     return processed_messageSTR
 
@@ -73,12 +73,17 @@ if __name__ == "__main__":
     decrypted_messageSTR = decrypt_message(encrypt_message(test_letterSTR, test_keySTR), test_keySTR)
     
     if test_letterSTR == decrypted_messageSTR:
-        print("function check SUCCEED.")
+        print("1st function check SUCCEED.")
     else:
-        print("function check FAIL.")
+        print("1st function check FAIL.")
         
     test_messageSTR = "message"
     test_keySTR = "key"
     
-    encrypted_messageSTR = process_message(messageSTR, keySTR, encryptionBOOL=True)
-    decrypted_messageSTR_2 = process_message(processed_messageSTR, keySTR, encryptionBOOL=False)
+    encrypted_messageSTR = process_message(test_messageSTR, test_keySTR, encryptionBOOL=True)
+    decrypted_messageSTR = process_message(encrypted_messageSTR, test_keySTR, encryptionBOOL=False)
+    
+    if decrypted_messageSTR == test_messageSTR:
+        print("2nd function check SUCCEED.")
+    else:
+        print("2nd function check FAILED.")
