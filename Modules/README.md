@@ -18,7 +18,7 @@
 - [ ] [**Introduction to the terminal](https://school.brainhackmtl.org/modules/introduction_to_terminal/) `Ongoing`  
 - [ ] [**Introduction to git and github](https://school.brainhackmtl.org/modules/git_github/)
 - [ ] [Python for data analysis](https://school.brainhackmtl.org/modules/python_data_analysis/)
-- [ ] [Writing scripts in python](https://school.brainhackmtl.org/modules/python_scripts/) `Ongoing`  
+- [x] [Writing scripts in python](https://school.brainhackmtl.org/modules/python_scripts/)  
 - [ ] [Machine learning - basics](https://school.brainhackmtl.org/modules/machine_learning_basics/)
 - [ ] [Data visualization](https://school.brainhackmtl.org/modules/python_visualization/)
 
