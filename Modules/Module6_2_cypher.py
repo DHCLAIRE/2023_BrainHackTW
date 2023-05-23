@@ -26,7 +26,7 @@ def main(input_path, keySTR, mode, output_path):
     However, if anything error in the one-liner which led the .close() did not perform
     , then any changes happended to the file would stay permernent.
     '''
-    # set the mode as encryption
+    # Check the bool condition of the mode (as encryption or not>> TRUE/FALSE)
     encryptMODE = mode =="encryption"
     # process the messege by the self-defined func
     processed_messegeSTR = process_message(messegeSTR, keySTR, encryptMODE)
