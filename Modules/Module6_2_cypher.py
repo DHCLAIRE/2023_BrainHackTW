@@ -8,13 +8,13 @@ import argparse
 # Import the self-defined func from self-made script
 from Module6_1_useful_functions import process_message
 
-def main(input_path, keySTR, mode, output_path):
+def main(input_path, keySTR, mode):
     '''
     To decypher the messge, and save it into a file
     *input_path*: the path of the messege
     *keySTR*: the key in string form
     *mode*: To encrypt or decrypt
-    *output_path*: the output file path (=where to save it)
+    *output_path*: the output file path (=where to save it)  =>> correction: include in the function but not in arg
     '''
     
     # Open and then read the messege file according to its path
@@ -27,11 +27,15 @@ def main(input_path, keySTR, mode, output_path):
     , then any changes happended to the file would stay permernent.
     '''
     # Check the bool condition of the mode (as encryption or not>> TRUE/FALSE)
-    encryptMODE = mode =="encryption"
+    encryptMODE = mode =="enc"  ##=>> correction: "encryption" to "enc"
     # process the messege by the self-defined func
     processed_messegeSTR = process_message(messegeSTR, keySTR, encryptMODE)
     #open a new file to save the processed messeges
-    with open(output_path, "w", encoding="utf-8") as output_file:
+    if mode == "enc":
+        txt_suffix = "encrypted"
+    else:
+        txt_suffix = "decrypted"
+    with open("%s_%s"%(input_path, mode), "w", encoding="utf-8") as output_file:
         output_file.write(processed_messegeSTR)
         
 
@@ -39,14 +43,14 @@ if __name__ == "__main__":
     # Create the argument parser by functions in argparse(python module)
     arg_parserFUNC = argparse.ArgumentParser()
     # For input file argument
-    arg_parserFUNC.add_argument("-i", dest="input_path", type=str, required=True, help="The input path of the file.")
+    arg_parserFUNC.add_argument("--message", dest="input_path", type=str, required=True, help="The input path of the file.")
     # For input file argument
-    arg_parserFUNC.add_argument("-o", dest="output_path", type=str, required=True, help="The output path of the file.")
+    #arg_parserFUNC.add_argument("-o", dest="output_path", type=str, required=True, help="The output path of the file.")
     # For keySTR argument
-    arg_parserFUNC.add_argument("-k", dest="keySTR", type=str, required=True, help="The keySTR for the messege.")
+    arg_parserFUNC.add_argument("--key", dest="keySTR", type=str, required=True, help="The keySTR for the messege.")
     # For the "mode" argument (An additional option for choices)
-    arg_parserFUNC.add_argument("-m", dest="mode", type=str, required=True, choices=["encryption", "decryption"], help="To encrypt or decrypt the messege.")
+    arg_parserFUNC.add_argument("--mode", dest="mode", type=str, required=True, choices=["enc", "dec"], help="To encrypt or decrypt the messege.")
     
     # To set the arguments' position??
     args = arg_parserFUNC.parse_args()
-    main(args.input_path, args.keySTR, args.mode, args.output_path)
+    main(args.input_path, args.keySTR, args.mode) # =>> correction: delete args.output_path
