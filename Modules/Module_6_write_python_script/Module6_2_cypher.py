@@ -14,7 +14,7 @@ def main(input_path, keySTR, mode):
     *input_path*: the path of the messege
     *keySTR*: the key in string form
     *mode*: To encrypt or decrypt
-    *output_path*: the output file path (=where to save it)  =>> correction: include in the function but not in arg
+    #*output_path*: the output file path (=where to save it)  =>> correction: include in the function but not in arg
     '''
     
     # Open and then read the messege file according to its path
@@ -32,10 +32,20 @@ def main(input_path, keySTR, mode):
     processed_messegeSTR = process_message(messegeSTR, keySTR, encryptBOOL)
     #open a new file to save the processed messeges
     if mode == "enc":
-        txt_suffix = "encrypted"
+        if "decrypted" in input_path:
+            output_filenameSTR = input_path[:-14]  # exclude the "decrypted.txt" str
+            txt_suffix = "_encrypted"
+        else:
+            output_filenameSTR = input_path[:-4]  # exclude the ".txt" str
+            txt_suffix = "_encrypted"
     else:
-        txt_suffix = "decrypted"
-    with open("%s_%s.txt"%(input_path, mode), "w", encoding="utf-8") as output_file:
+        if "encrypted" in input_path:
+            output_filenameSTR = input_path[:-14]  # exclude the "decrypted.txt" str
+            txt_suffix = "_decrypted"
+        else:
+            output_filenameSTR = input_path[:-4]  # exclude the ".txt" str
+            txt_suffix = "_decrypted"
+    with open("%s%s.txt"%(output_filenameSTR, txt_suffix), "w", encoding="utf-8") as output_file:
         output_file.write(processed_messegeSTR)
         
 
@@ -54,3 +64,4 @@ if __name__ == "__main__":
     # To set the arguments' position??
     args = arg_parserFUNC.parse_args()
     main(args.input_path, args.keySTR, args.mode) # =>> correction: delete args.output_path
+    print("DONE.")
