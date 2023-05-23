@@ -27,15 +27,15 @@ def main(input_path, keySTR, mode):
     , then any changes happended to the file would stay permernent.
     '''
     # Check the bool condition of the mode (as encryption or not>> TRUE/FALSE)
-    encryptMODE = mode =="enc"  ##=>> correction: "encryption" to "enc"
+    encryptBOOL = mode =="enc"  ##=>> correction: "encryption" to "enc"
     # process the messege by the self-defined func
-    processed_messegeSTR = process_message(messegeSTR, keySTR, encryptMODE)
+    processed_messegeSTR = process_message(messegeSTR, keySTR, encryptBOOL)
     #open a new file to save the processed messeges
     if mode == "enc":
         txt_suffix = "encrypted"
     else:
         txt_suffix = "decrypted"
-    with open("%s_%s"%(input_path, mode), "w", encoding="utf-8") as output_file:
+    with open("%s_%s.txt"%(input_path, mode), "w", encoding="utf-8") as output_file:
         output_file.write(processed_messegeSTR)
         
 
