@@ -35,7 +35,7 @@ def main(input_path, keySTR, mode):
         txt_suffix = "_encrypted"
     else:
         txt_suffix = "_decrypted"
-    with open("%s%s.txt"%(output_filenameSTR, txt_suffix), "w", encoding="utf-8") as output_file:
+    with open("%s%s.txt"%(input_path[:-4], txt_suffix), "w", encoding="utf-8") as output_file:
         output_file.write(processed_messegeSTR)
         
 
