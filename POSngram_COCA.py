@@ -8,11 +8,14 @@ import random
 from random import sample
 import os
 #from gtts import gTTS
-import pandas as pd
-import time
+#import pandas as pd
+#import time
+
 from pathlib import Path
 import nltk
 import re
+from collections import Counter
+from nltk import ngrams
 #from nltk import sent_tokenize
 from nltk import tokenize
 import glob
@@ -77,21 +80,20 @@ if __name__ == "__main__":
     At that point international travel will resume. Still
     , New South Wales state premier Dominic Perrottet stated that a cautious stages approach to reopening is needed."""
     
-    # Preprocessing the text(lowercase, or remove punctuation?)
-    
-    # Tokenize the raw text
-    wordLIST = nltk.word_tokenize(wordsSTR)
+    # Preprocessing the text(lowercase & using re to remove the punctuations)
+    n_wordsSTR = wordsSTR.lower()
+    cleaned_wordsSTR = re.sub(r'[^\w\s]', '', n_wordsSTR)
+    # Tokenize the preprocessed text
+    wordLIST = nltk.word_tokenize(cleaned_wordsSTR)
     
     # TRIGRAM ## example commands from the CUPOY NLP course: n-gram tutorial
-    trigram_frequencyDICT = dict()
     
+    trigram_frequencyDICT = dict()
     # Starting from the first word(py_index=0), and add 1 to frequency when counted.
     for i in range(0, len(wordLIST)-2):
         trigram_frequencyDICT[tuple(wordLIST[i:i+3])] = trigram_frequencyDICT.get(tuple(wordLIST[i:i+3]), 0) + 1  
-        
     # Sorted by the trigram freqeuncy, and formed as (word, count) format.
     trigram_frequencyDICT = sorted(trigram_frequencyDICT.items(), key=lambda words_count: words_count[1], reverse=True)
-    
     # Check the top 10 frequent trigram.
     pprint(trigram_frequencyDICT[:10])
 
