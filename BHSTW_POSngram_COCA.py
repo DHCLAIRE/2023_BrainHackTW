@@ -106,5 +106,5 @@ if __name__ == "__main__":
     # Surprisal calculation (= calculation of the target POS's probability
     # >> calculation theorum == https://vitalflux.com/n-gram-language-models-explained-examples/
     
-    POS_surprisal = 
+    POS_surprisalFLOAT = targetPOS_countINT/prev2w_countINT
 
