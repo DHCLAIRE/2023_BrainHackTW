@@ -14,10 +14,11 @@ from pathlib import Path
 import nltk
 import re
 #from nltk import sent_tokenize
-#from nltk import tokenize
+from nltk import tokenize
 import glob
 
 
+"""
 # Command examples from https://kristopherkyle.github.io/corpus-analysis-python/Python_Tutorial_4.html
 def corpus_freq(dir_name,lemma_d):
     freq = {} #create an empty dictionary to store the word : frequency pairs
@@ -44,29 +45,53 @@ def corpus_freq(dir_name,lemma_d):
                 freq[x] += 1
 
     return(freq)
+"""
+""" ## TO-DO LIST(STEPS) for POS trigram
+1. Calculate the trigram count from tagged corpus(e.g. COCA)
+"""
 
 
 
 if __name__ == "__main__":
     # Go through all the files
     txt_DIR = "/Users/neuroling/Documents/coca/coca-wlp/wlp_acad_vuw"
-    filenamesLIST = glob.glob(txt_DIR +"/*.txt")
-    print(type(filenamesLIST))
-    print(len(filenamesLIST))
+    #filenamesLIST = glob.glob(txt_DIR +"/*.txt")
+    #print(type(filenamesLIST))
+    #print(len(filenamesLIST))
     
     """
     for fileN_STR in filenamesLIST:
         with open (fileNamesSTR, errors="ignore", encoding="utf-8") as fileTXT:
             fileTXT.read()
     """
-    # bigram ## example commands from the CUPOY NLP course: n-gram tutorial
-    bigram_frequency = dict()
+    # Input the text data(e.g. corpus data)
+    wordsSTR = """The marathon COVID-19 lockdown in Sydney, Australia
+    , ended Monday for vaccinated residents. Stay-at-home orders imposed on June 26 have been lifted. 
+    Government advertisements have promised that freedoms would return when vaccination rates passed certain milestones. 
+    The message has been getting through to the community. Lockdown in the New South Wales state capital, Sydney
+    , was lifted Monday because inoculation rates have passed 70% for people above aged 16.
+    Shops have reopened for the first time since June. Small gatherings at home are permitted
+    , and larger groups are allowed to meet at parks and beaches. However
+    , the above apply only to fully vaccinated people. All residents still face restrictions on travel beyond Sydney.
+    The rules will be eased when vaccination rates in New South Wales reach 80%.
+    At that point international travel will resume. Still
+    , New South Wales state premier Dominic Perrottet stated that a cautious stages approach to reopening is needed."""
     
-    for i in range(0, len(words)-1):
-        bigram_frequency[tuple(words[i:i+2])] = bigram_frequency.get(tuple(words[i:i+2]), 0) + 1
+    # Preprocessing the text(lowercase, or remove punctuation?)
+    
+    # Tokenize the raw text
+    wordLIST = nltk.word_tokenize(wordsSTR)
+    
+    # TRIGRAM ## example commands from the CUPOY NLP course: n-gram tutorial
+    trigram_frequencyDICT = dict()
+    
+    # Starting from the first word(py_index=0), and add 1 to frequency when counted.
+    for i in range(0, len(wordLIST)-2):
+        trigram_frequencyDICT[tuple(wordLIST[i:i+3])] = trigram_frequencyDICT.get(tuple(wordLIST[i:i+3]), 0) + 1  
         
-    # 根據詞頻排序, 並轉換為(word, count)格式
-    bigram_frequency = sorted(bigram_frequency.items(), key=lambda words_count: words_count[1], reverse=True)
+    # Sorted by the trigram freqeuncy, and formed as (word, count) format.
+    trigram_frequencyDICT = sorted(trigram_frequencyDICT.items(), key=lambda words_count: words_count[1], reverse=True)
     
-    # 查看詞頻前10的字詞
-    bigram_frequency[:10]        
+    # Check the top 10 frequent trigram.
+    pprint(trigram_frequencyDICT[:10])
+
