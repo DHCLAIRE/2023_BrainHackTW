@@ -85,7 +85,7 @@ if __name__ == "__main__":
     At that point international travel will resume. Still
     , New South Wales state premier Dominic Perrottet stated that a cautious stages approach to reopening is needed."""
     
-    # Preprocessing the text(lowercase & using re to remove the punctuations)
+    # Preprocessing the text (lowercase & using re to remove the punctuations)
     n_wordsSTR = wordsSTR.lower()
     cleaned_wordsSTR = re.sub(r'[^\w\s]', '', n_wordsSTR)
     # Tokenize the preprocessed text
@@ -101,4 +101,10 @@ if __name__ == "__main__":
     trigram_frequencyDICT = sorted(trigram_frequencyDICT.items(), key=lambda words_count: words_count[1], reverse=True)
     # Check the top 10 frequent trigram.
     pprint(trigram_frequencyDICT[:10])
+    
+    
+    # Surprisal calculation (= calculation of the target POS's probability
+    # >> calculation theorum == https://vitalflux.com/n-gram-language-models-explained-examples/
+    
+    POS_surprisal = 
 
