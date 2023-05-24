@@ -22,8 +22,17 @@ import glob
 
 
 """
-# Command examples from https://kristopherkyle.github.io/corpus-analysis-python/Python_Tutorial_4.html
+
+## Modefied corpus_freq FUNC
 def corpus_freq(dir_name,lemma_d):
+    '''
+    To calculate the frequency of a certain 
+    Example commands from)
+    # 1. https://kristopherkyle.github.io/corpus-analysis-python/Python_Tutorial_4.html
+    # 2. The CUPOY NLP course: n-gram tutorial
+    '''
+
+
     freq = {} #create an empty dictionary to store the word : frequency pairs
 
     #create a list that includes all files in the dir_name folder that end in ".txt"
