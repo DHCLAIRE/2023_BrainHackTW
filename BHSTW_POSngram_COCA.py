@@ -58,10 +58,6 @@ def corpus_freq(dir_name,lemma_d):
 
     return(freq)
 """
-""" ## TO-DO LIST(STEPS) for POS trigram
-1. Calculate the trigram count from tagged corpus(e.g. COCA)
-"""
-
 
 
 if __name__ == "__main__":
@@ -73,7 +69,7 @@ if __name__ == "__main__":
     
     """
     for fileN_STR in filenamesLIST:
-        with open (fileNamesSTR, errors="ignore", encoding="utf-8") as fileTXT:
+        with open (fileNamesSTR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             fileTXT.read()
     """
     # Input the text data(e.g. corpus data)
@@ -100,7 +96,7 @@ if __name__ == "__main__":
     trigram_frequencyDICT = dict()
     # Starting from the first word(py_index=0), and add 1 to frequency when counted.
     for i in range(0, len(wordLIST)-2):
-        trigram_frequencyDICT[tuple(wordLIST[i:i+3])] = trigram_frequencyDICT.get(tuple(wordLIST[i:i+3]), 0) + 1  
+        trigram_frequencyDICT[tuple(wordLIST[i:i+3])] = trigram_frequencyDICT.get(tuple(wordLIST[i:i+3]), 0) + 1
     # Sorted by the trigram freqeuncy, and formed as (word, count) format.
     trigram_frequencyDICT = sorted(trigram_frequencyDICT.items(), key=lambda words_count: words_count[1], reverse=True)
     # Check the top 10 frequent trigram.
