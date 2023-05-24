@@ -32,19 +32,9 @@ def main(input_path, keySTR, mode):
     processed_messegeSTR = process_message(messegeSTR, keySTR, encryptBOOL)
     #open a new file to save the processed messeges
     if mode == "enc":
-        if "decrypted" in input_path:
-            output_filenameSTR = input_path[:-14]  # exclude the "decrypted.txt" str
-            txt_suffix = "_encrypted"
-        else:
-            output_filenameSTR = input_path[:-4]  # exclude the ".txt" str
-            txt_suffix = "_encrypted"
+        txt_suffix = "_encrypted"
     else:
-        if "encrypted" in input_path:
-            output_filenameSTR = input_path[:-14]  # exclude the "decrypted.txt" str
-            txt_suffix = "_decrypted"
-        else:
-            output_filenameSTR = input_path[:-4]  # exclude the ".txt" str
-            txt_suffix = "_decrypted"
+        txt_suffix = "_decrypted"
     with open("%s%s.txt"%(output_filenameSTR, txt_suffix), "w", encoding="utf-8") as output_file:
         output_file.write(processed_messegeSTR)
         
