@@ -45,6 +45,8 @@ def corpus_freq(dir_name,lemma_d):
 
     return(freq)
 
+
+
 if __name__ == "__main__":
     # Go through all the files
     txt_DIR = "/Users/neuroling/Documents/coca/coca-wlp/wlp_acad_vuw"
@@ -52,9 +54,19 @@ if __name__ == "__main__":
     print(type(filenamesLIST))
     print(len(filenamesLIST))
     
+    """
     for fileN_STR in filenamesLIST:
         with open (fileNamesSTR, errors="ignore", encoding="utf-8") as fileTXT:
             fileTXT.read()
-            
-        
+    """
+    # bigram ## example commands from the CUPOY NLP course: n-gram tutorial
+    bigram_frequency = dict()
     
+    for i in range(0, len(words)-1):
+        bigram_frequency[tuple(words[i:i+2])] = bigram_frequency.get(tuple(words[i:i+2]), 0) + 1
+        
+    # 根據詞頻排序, 並轉換為(word, count)格式
+    bigram_frequency = sorted(bigram_frequency.items(), key=lambda words_count: words_count[1], reverse=True)
+    
+    # 查看詞頻前10的字詞
+    bigram_frequency[:10]        
