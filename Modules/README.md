@@ -2,7 +2,7 @@
 ***
 ##### To-do list
 - [ ] Write the n-gram script
-- [ ] 5/24 (三) 和TA開會  
+- [x] 5/24 (三) 和TA開會  
       1. 介紹ngram計算過程  
       2. my scripts  
       3. 如何融合到TRF (how to interpret the TRF results)
