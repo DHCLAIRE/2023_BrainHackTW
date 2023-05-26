@@ -16,13 +16,13 @@
 ##### Scripts TO-DO list
 ###### POS Trigram
 - [ ] Calculate the trigram count from tagged corpus(e.g. COCA) = the word frquency from the corpus
-- [ ] POS tag the testing text files
+- [x] POS tag the testing text files (=UCREL CLAWS_C7 tag)
+- [ ] Preprocess the tagged testing text files
 - [ ] Segment the testing txt files into trigram unit 
 - [ ] Calculate the probability(=surprisal) of the target POS (from the target word)
-- [ ] 
 ###### TRF Production
 - [ ] Preprocess the MEG data
-- [ ] Make the predictor pickle file from the surprisal of ngram (see ``POS Trigram`` part)
+- [x] Make the predictor pickle file from the surprisal of ngram (see ``POS Trigram`` part)
 - [ ] Produce the ngram TRF from the predictor
 - [ ] Analyze the ngram TRF (Statistics)
 
