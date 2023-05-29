@@ -62,21 +62,31 @@ def corpus_freq(dir_name,lemma_d):
 
 if __name__ == "__main__":
     # Go through all the files
-    txtRoot_DIR = Path("/Users/neuroling/Documents/coca/coca-wlp")
-    txtFile_DIR_LIST  = []
-    for folder in txtRoot_DIR.iterdir():
+    ## Creat the data path from the folder
+    txtRoot_DIR = "/Users/neuroling/Documents/coca/coca-wlp/"
+    txtFile_DIR_LIST = []
+    for folder in Path(txtRoot_DIR).iterdir():
         if re.match(r'wlp_*', folder.name):
             txtFile_DIR_LIST.append(folder.name)
     pprint(txtFile_DIR_LIST)
-    #filenamesLIST = glob.glob(txt_DIR +"/*.txt")
-    #print(type(filenamesLIST))
-    #print(len(filenamesLIST))
-
+    ## Find all txt files
+    All_txtNameLIST = []
+    for txtFolderSTR in txtFile_DIR_LIST:
+        everytxt_DIR_STR = txtRoot_DIR + txtFolderSTR
+        filenamesLIST = glob.glob(everytxt_DIR_STR + "/*.txt")
+        All_txtNameLIST.extend(filenamesLIST)
+    #print(type(All_txtNameLIST))
+    print(len(All_txtNameLIST))
     
-    
-    #for fileN_STR in filenamesLIST:
-        #with open (fileNamesSTR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
-            #fileTXT.read()
+    for fileN_STR in filenamesLIST[:3]:
+        with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
+            rawLIST = fileTXT.read().replace("\t", " ").split("\n")
+            pprint(rawLIST[:10])
+            print(type(rawLIST))
+            print(len(rawLIST))
+            #for row in rawTXT:
+                #print(row)
+            
     
     # Input the text data(e.g. corpus data)
     #wordsSTR = """The marathon COVID-19 lockdown in Sydney, Australia
