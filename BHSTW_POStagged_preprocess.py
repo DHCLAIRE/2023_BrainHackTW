@@ -61,7 +61,7 @@ if __name__ == "__main__":
         print("NEW_", len(rawLIST))
 
         # Preporcess the tagged txt
-        for n_rowSTR in rawLIST:
+        for n_rowSTR in rawLIST[:10]:
             #Exclude the space in the string, and split them into a collected LIST
             de_rowLIST = re.findall(r'\S+', n_rowSTR)  # [\s] = find space  ; \d+\s\d+ = find all set of (two strings of digits with " one" space in between); de = denoised strings
             
@@ -91,4 +91,4 @@ if __name__ == "__main__":
             cleanedLIST.append(de_rowLIST)
             print("New___", de_rowLIST, len(de_rowLIST))
         print(len(cleanedLIST))
-                
+        pprint(cleanedLIST)
