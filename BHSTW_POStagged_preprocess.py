@@ -64,6 +64,13 @@ if __name__ == "__main__":
         for n_rowSTR in rawLIST:
             de_rowLIST = re.findall(r'\S+', n_rowSTR)  # [\s] = find space  ; \d+\s\d+ = find all set of (two strings of digits with " one" space in between); de = denoised strings
             #print("de_rowLIST", de_rowLIST)
+            de_rowLIST[-1] = de_rowLIST[-1].lower()  # switch the POS tag into lowercase(same as the COCA corpus)
+            if re.findall(r'[,|;|.|?|!]', de_rowLIST[2]) and not re.findall(r'[\w]', de_rowLIST[2]):  # find all puncs but no digits or word in it
+                de_rowLIST[-1] = de_rowLIST[-1].replace(de_rowLIST[-1], "y")
+                
+            else:
+                pass
+            print(de_rowLIST)
             cleanedLIST.append(de_rowLIST)
         print(len(cleanedLIST))
                 
