@@ -71,14 +71,14 @@ if __name__ == "__main__":
                 del de_rowLIST[5:]
             else:
                 pass
-
+            """
             # find all puncs but no digits or word in it, and replace the original POS tag into "y" (same as COCA)
             if re.findall(r'[,|;|.|?|!|:]', de_rowLIST[2]) and not re.findall(r'[\w]', de_rowLIST[2]):
                 de_rowLIST[-1] = de_rowLIST[-1].replace(de_rowLIST[-1], "y")
             else:
                 pass
-            
-            # Gather the most possible POS tag
+            """
+            # Rename the most possible POS tags of the left POS
             if re.findall(r'[\w]+', de_rowLIST[-1]):  # [\w]+ = fina all seq without non-digits/chars at the end
                 segPOS_LIST = re.findall(r'[\w]+', de_rowLIST[-1])
                 de_rowLIST[-1] = segPOS_LIST[0]
@@ -88,7 +88,10 @@ if __name__ == "__main__":
             #switch the POS tag into lowercase(same as the COCA corpus)
             de_rowLIST[-1] = de_rowLIST[-1].lower()
             de_rowLIST.pop(3)
-            cleanedLIST.append(de_rowLIST)
+            if re.findall(r'[,|;|.|?|!|:|\W]', de_rowLIST[2]) and not re.findall(r'[\w]', de_rowLIST[2]):
+                pass
+            else:
+                cleanedLIST.append(de_rowLIST)
             print("New___", de_rowLIST, len(de_rowLIST))
         print(len(cleanedLIST))
         pprint(cleanedLIST)
