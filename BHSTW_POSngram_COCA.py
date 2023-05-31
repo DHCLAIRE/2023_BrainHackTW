@@ -85,32 +85,17 @@ if __name__ == "__main__":
             print(type(rawLIST))
             print(len(rawLIST))
         cleanedLIST = []
+        # Split the tagged txt into LIST
         for rowSTR in rawLIST[:10]:
             tmpLIST = rowSTR.split(" ")
-            cleanedLIST.append(tmpLIST)
+            # remove blurred raw txt, and append the rest of it
+            if len(tmpLIST[-1]) == 0:
+                pass
+            else:
+                cleanedLIST.append(tmpLIST)
         pprint(cleanedLIST)
-            
-    
-    # Input the text data(e.g. corpus data)
-    #wordsSTR = """The marathon COVID-19 lockdown in Sydney, Australia
-    #, ended Monday for vaccinated residents. Stay-at-home orders imposed on June 26 have been lifted. 
-    #Government advertisements have promised that freedoms would return when vaccination rates passed certain milestones. 
-    #The message has been getting through to the community. Lockdown in the New South Wales state capital, Sydney
-    #, was lifted Monday because inoculation rates have passed 70% for people above aged 16.
-    #Shops have reopened for the first time since June. Small gatherings at home are permitted
-    #, and larger groups are allowed to meet at parks and beaches. However
-    #, the above apply only to fully vaccinated people. All residents still face restrictions on travel beyond Sydney.
-    #The rules will be eased when vaccination rates in New South Wales reach 80%.
-    #At that point international travel will resume. Still
-    #, New South Wales state premier Dominic Perrottet stated that a cautious stages approach to reopening is needed."""
     
     """
-    # Preprocessing the text (lowercase & using re to remove the punctuations)
-    n_wordsSTR = wordsSTR.lower()
-    cleaned_wordsSTR = re.sub(r'[^\w\s]', '', n_wordsSTR)
-    # Tokenize the preprocessed text
-    wordLIST = nltk.word_tokenize(cleaned_wordsSTR)
-    
     # TRIGRAM ## example commands from the CUPOY NLP course: n-gram tutorial
     
     trigram_frequencyDICT = dict()
@@ -122,9 +107,9 @@ if __name__ == "__main__":
     # Check the top 10 frequent trigram.
     pprint(trigram_frequencyDICT[:10])
     
-    """
+    
     # Surprisal calculation (= calculation of the target POS's probability
     # >> calculation theorum == https://vitalflux.com/n-gram-language-models-explained-examples/
     
     #POS_surprisalFLOAT = targetPOS_countINT/prev2w_countINT
-
+    """
