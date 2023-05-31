@@ -14,8 +14,9 @@ import os
 from pathlib import Path
 import nltk
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from nltk import ngrams
+from nltk import trigrams
 #from nltk import sent_tokenize
 from nltk import tokenize
 import glob
@@ -80,17 +81,17 @@ if __name__ == "__main__":
     
     all_cleanedLIST = []
     all_POStagLIST = []
-    for fileN_STR in filenamesLIST[:3]:
+    for fileN_STR in filenamesLIST[:50]:#[:3]:
         print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
-            pprint(rawLIST[:10])
-            print(type(rawLIST))
-            print(len(rawLIST))
+            #pprint(rawLIST)#[:50])
+            #print(type(rawLIST))
+            #print(len(rawLIST))
         cleanedLIST = []
         POStagLIST = []
         # Split the tagged txt into LIST
-        for rowSTR in rawLIST[:10]:
+        for rowSTR in rawLIST[:100]:#[:50]:
             tmpLIST = rowSTR.split(" ")
             # remove blurred raw txt, and append the rest of it
             if len(tmpLIST[-1]) == 0:
@@ -98,28 +99,49 @@ if __name__ == "__main__":
             else:
                 cleanedLIST.append(tmpLIST)
                 POStagLIST.append(tmpLIST[-1])
-        pprint(cleanedLIST)
-        print(len(cleanedLIST))
-        print(POStagLIST)
+        #pprint(cleanedLIST)
+        #print(len(cleanedLIST))
+        #print(POStagLIST)
         all_cleanedLIST.append(cleanedLIST)
         all_POStagLIST.append(POStagLIST)
         
-    pprint(all_cleanedLIST)
-    print(len(all_cleanedLIST))
-    pprint(all_POStagLIST)
-    print(len(all_POStagLIST))
+    #pprint(all_cleanedLIST)
+    #print(len(all_cleanedLIST))
+    #pprint(all_POStagLIST)
+    #print(len(all_POStagLIST))
     
+    
+    corpus_freqDICT = defaultdict(lambda: defaultdict(lambda: 0))
+    # Count frequency of co-occurance ## example script from https://alvinntnu.github.io/python-notes/nlp/language-model.html
+    for posLIST in all_POStagLIST:
+        """ # use it later
+        print(posLIST)
+        trigramLIST = list(nltk.ngrams(posLIST, 3))
+        print(trigramLIST[:3])
+        """
+        for pos1, pos2, pos3 in trigrams(posLIST, pad_right=True, pad_left=True):
+                corpus_freqDICT[(pos1, pos2)][pos3] += 1
+        
+    # Let's transform the counts to probabilities
+    for pos1_pos2 in corpus_freqDICT:
+        total_count = float(sum(corpus_freqDICT[pos1_pos2].values()))
+        for pos3 in corpus_freqDICT[pos1_pos2]:
+            corpus_freqDICT[pos1_pos2][pos3] /= total_count
+    freqResultDICT = sorted(dict(corpus_freqDICT['nn2', 'vbdr']).items(), key=lambda x:-1*x[1])
+    print(freqResultDICT)
+    #print(type(corpus_freqDICT))
+    #pprint(corpus_freqDICT)
+            
+            
+            
     """
-    corpus_freqDICT = {}
-    #iterate through the lemmatized text and add words to the frequency dictionary
-    for infoLIST in all_cleanedLIST:
         #the first time we see a particular word we create a key:value pair
         if infoLIST[1] not in corpus_freqDICT:
             corpus_freqDICT[infoLIST[1]] = 1
         #when we see a word subsequent times, we add (+=) one to the frequency count
         else:
             corpus_freqDICT[infoLIST[1]] += 1
-    """
+            """
 
             
             
@@ -138,7 +160,9 @@ if __name__ == "__main__":
     
     
     # Surprisal calculation (= calculation of the target POS's probability
-    # >> calculation theorum == https://vitalflux.com/n-gram-language-models-explained-examples/
+    # >> calculation theorum == https://vitalflux.com/n-gram-language-corpus_freqDICTs-explained-examples/
     
     #POS_surprisalFLOAT = targetPOS_countINT/prev2w_countINT
+    
+    # suprisal
     """
