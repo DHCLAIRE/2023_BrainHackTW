@@ -37,7 +37,7 @@ if __name__ == "__main__":
     POStaggedFolder = txtRoot_DIR_STR + "LTTC_Stim_POStagged"
     #print(POStaggedFolder)
     filenamesLIST = glob.glob(POStaggedFolder + "/*.txt")
-    #print(filenamesLIST)
+    print(filenamesLIST)
     
     # Open evey tagged files
     for fileN_STR in filenamesLIST[:3]:
@@ -60,17 +60,35 @@ if __name__ == "__main__":
                 pass
         print("NEW_", len(rawLIST))
 
-        # Exclude the space in the string, and split them into a collected LIST
+        # Preporcess the tagged txt
         for n_rowSTR in rawLIST:
+            #Exclude the space in the string, and split them into a collected LIST
             de_rowLIST = re.findall(r'\S+', n_rowSTR)  # [\s] = find space  ; \d+\s\d+ = find all set of (two strings of digits with " one" space in between); de = denoised strings
-            #print("de_rowLIST", de_rowLIST)
-            de_rowLIST[-1] = de_rowLIST[-1].lower()  # switch the POS tag into lowercase(same as the COCA corpus)
-            if re.findall(r'[,|;|.|?|!]', de_rowLIST[2]) and not re.findall(r'[\w]', de_rowLIST[2]):  # find all puncs but no digits or word in it
-                de_rowLIST[-1] = de_rowLIST[-1].replace(de_rowLIST[-1], "y")
-                
+            
+            #Delete the redundant POS tags
+            if len(de_rowLIST) > 5:
+                # Delete the possible POS tag
+                del de_rowLIST[5:]
             else:
                 pass
-            print(de_rowLIST)
+
+            # find all puncs but no digits or word in it, and replace the original POS tag into "y" (same as COCA)
+            if re.findall(r'[,|;|.|?|!|:]', de_rowLIST[2]) and not re.findall(r'[\w]', de_rowLIST[2]):
+                de_rowLIST[-1] = de_rowLIST[-1].replace(de_rowLIST[-1], "y")
+            else:
+                pass
+            
+            # Gather the most possible POS tag
+            if re.findall(r'[\w]+', de_rowLIST[-1]):  # [\w]+ = fina all seq without non-digits/chars at the end
+                segPOS_LIST = re.findall(r'[\w]+', de_rowLIST[-1])
+                de_rowLIST[-1] = segPOS_LIST[0]
+            else:
+                pass
+            
+            #switch the POS tag into lowercase(same as the COCA corpus)
+            de_rowLIST[-1] = de_rowLIST[-1].lower()
+            de_rowLIST.pop(3)
             cleanedLIST.append(de_rowLIST)
+            print("New___", de_rowLIST, len(de_rowLIST))
         print(len(cleanedLIST))
                 
