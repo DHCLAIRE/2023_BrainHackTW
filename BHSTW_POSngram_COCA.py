@@ -79,13 +79,16 @@ if __name__ == "__main__":
     print(len(All_txtNameLIST))
     
     all_cleanedLIST = []
+    all_POStagLIST = []
     for fileN_STR in filenamesLIST[:3]:
+        print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
             pprint(rawLIST[:10])
             print(type(rawLIST))
             print(len(rawLIST))
         cleanedLIST = []
+        POStagLIST = []
         # Split the tagged txt into LIST
         for rowSTR in rawLIST[:10]:
             tmpLIST = rowSTR.split(" ")
@@ -94,22 +97,29 @@ if __name__ == "__main__":
                 pass
             else:
                 cleanedLIST.append(tmpLIST)
+                POStagLIST.append(tmpLIST[-1])
         pprint(cleanedLIST)
         print(len(cleanedLIST))
-        all_cleanedLIST.extend(cleanedLIST)
+        print(POStagLIST)
+        all_cleanedLIST.append(cleanedLIST)
+        all_POStagLIST.append(POStagLIST)
+        
     pprint(all_cleanedLIST)
     print(len(all_cleanedLIST))
+    pprint(all_POStagLIST)
+    print(len(all_POStagLIST))
     
-
-    corpus_countDICT = {}
+    """
+    corpus_freqDICT = {}
     #iterate through the lemmatized text and add words to the frequency dictionary
-    for x in cleanedLIST:
+    for infoLIST in all_cleanedLIST:
         #the first time we see a particular word we create a key:value pair
-        if x not in freq:
-            freq[x] = 1
+        if infoLIST[1] not in corpus_freqDICT:
+            corpus_freqDICT[infoLIST[1]] = 1
         #when we see a word subsequent times, we add (+=) one to the frequency count
         else:
-            freq[x] += 1
+            corpus_freqDICT[infoLIST[1]] += 1
+    """
 
             
             
