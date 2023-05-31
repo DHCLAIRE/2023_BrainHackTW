@@ -78,6 +78,7 @@ if __name__ == "__main__":
     #print(type(All_txtNameLIST))
     print(len(All_txtNameLIST))
     
+    all_cleanedLIST = []
     for fileN_STR in filenamesLIST[:3]:
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
@@ -94,6 +95,24 @@ if __name__ == "__main__":
             else:
                 cleanedLIST.append(tmpLIST)
         pprint(cleanedLIST)
+        print(len(cleanedLIST))
+        all_cleanedLIST.extend(cleanedLIST)
+    pprint(all_cleanedLIST)
+    print(len(all_cleanedLIST))
+    
+
+    corpus_countDICT = {}
+    #iterate through the lemmatized text and add words to the frequency dictionary
+    for x in cleanedLIST:
+        #the first time we see a particular word we create a key:value pair
+        if x not in freq:
+            freq[x] = 1
+        #when we see a word subsequent times, we add (+=) one to the frequency count
+        else:
+            freq[x] += 1
+
+            
+            
     
     """
     # TRIGRAM ## example commands from the CUPOY NLP course: n-gram tutorial
