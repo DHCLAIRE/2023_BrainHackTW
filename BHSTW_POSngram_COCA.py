@@ -84,8 +84,11 @@ if __name__ == "__main__":
             pprint(rawLIST[:10])
             print(type(rawLIST))
             print(len(rawLIST))
-            #for row in rawTXT:
-                #print(row)
+        cleanedLIST = []
+        for rowSTR in rawLIST[:10]:
+            tmpLIST = rowSTR.split(" ")
+            cleanedLIST.append(tmpLIST)
+        pprint(cleanedLIST)
             
     
     # Input the text data(e.g. corpus data)
