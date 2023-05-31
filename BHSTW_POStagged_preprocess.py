@@ -40,7 +40,7 @@ if __name__ == "__main__":
     print(filenamesLIST)
     
     # Open evey tagged files
-    for fileN_STR in filenamesLIST[:3]:
+    for fileN_STR in filenamesLIST:
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().split("\n")  #.replace("\t", " ")
             rawLIST.pop(0) # remove the 1st and the 2nd elements in the LIST
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         print("NEW_", len(rawLIST))
 
         # Preporcess the tagged txt
-        for n_rowSTR in rawLIST[:10]:
+        for n_rowSTR in rawLIST:
             #Exclude the space in the string, and split them into a collected LIST
             de_rowLIST = re.findall(r'\S+', n_rowSTR)  # [\s] = find space  ; \d+\s\d+ = find all set of (two strings of digits with " one" space in between); de = denoised strings
             
@@ -92,3 +92,9 @@ if __name__ == "__main__":
             print("New___", de_rowLIST, len(de_rowLIST))
         print(len(cleanedLIST))
         pprint(cleanedLIST)
+        
+        # Save the cleaned POS tags into json file
+        sub_idLIST = re.findall(r'S\d+_', fileN_STR)
+        #print(sub_idLIST, type(sub_idLIST), sub_idLIST[0])
+        with open(txtRoot_DIR_STR+'{}dePOS_LIST.json'.format(sub_idLIST[0]), "w", newline='', encoding="UTF-8") as jsonfile:
+            json.dump(cleanedLIST, jsonfile, ensure_ascii=False)
