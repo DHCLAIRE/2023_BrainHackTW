@@ -8,7 +8,7 @@ import random
 from random import sample
 import os
 #from gtts import gTTS
-#import pandas as pd
+import pandas as pd
 #import time
 
 from pathlib import Path
@@ -20,6 +20,7 @@ from nltk import trigrams
 #from nltk import sent_tokenize
 from nltk import tokenize
 import glob
+import math
 
 
 """
@@ -65,6 +66,7 @@ if __name__ == "__main__":
     # Go through all the files
     ## Creat the data path from the folder
     txtRoot_DIR = "/Users/neuroling/Documents/coca/coca-wlp/"
+    taggedRoot_DIR_STR = "/Volumes/Neurolang_1/Project_Assistant/2021_Ongoing/2020_LTTC/Experiment_materials/LTTC_MEG/"
     txtFile_DIR_LIST = []
     for folder in Path(txtRoot_DIR).iterdir():
         if re.match(r'wlp_*', folder.name):
@@ -81,7 +83,7 @@ if __name__ == "__main__":
     
     all_cleanedLIST = []
     all_POStagLIST = []
-    for fileN_STR in filenamesLIST[:50]:#[:3]:
+    for fileN_STR in filenamesLIST[:3]:#[:3]:
         print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
@@ -91,7 +93,7 @@ if __name__ == "__main__":
         cleanedLIST = []
         POStagLIST = []
         # Split the tagged txt into LIST
-        for rowSTR in rawLIST[:100]:#[:50]:
+        for rowSTR in rawLIST[:10]:#[:50]:
             tmpLIST = rowSTR.split(" ")
             # remove blurred raw txt, and append the rest of it
             if len(tmpLIST[-1]) == 0:
@@ -114,11 +116,11 @@ if __name__ == "__main__":
     corpus_freqDICT = defaultdict(lambda: defaultdict(lambda: 0))
     # Count frequency of co-occurance ## example script from https://alvinntnu.github.io/python-notes/nlp/language-model.html
     for posLIST in all_POStagLIST:
-        """ # use it later
+        ''' # use it later
         print(posLIST)
         trigramLIST = list(nltk.ngrams(posLIST, 3))
         print(trigramLIST[:3])
-        """
+        '''
         for pos1, pos2, pos3 in trigrams(posLIST, pad_right=True, pad_left=True):
                 corpus_freqDICT[(pos1, pos2)][pos3] += 1
         
@@ -127,11 +129,46 @@ if __name__ == "__main__":
         total_count = float(sum(corpus_freqDICT[pos1_pos2].values()))
         for pos3 in corpus_freqDICT[pos1_pos2]:
             corpus_freqDICT[pos1_pos2][pos3] /= total_count
+            #print(type(corpus_freqDICT))
+            pprint(corpus_freqDICT)
+
+    # Get the probabilities from the trigram model (trained by COCA)  'nn2', 'vbdr'
     freqResultDICT = sorted(dict(corpus_freqDICT['nn2', 'vbdr']).items(), key=lambda x:-1*x[1])
-    print(freqResultDICT)
-    #print(type(corpus_freqDICT))
-    #pprint(corpus_freqDICT)
-            
+    print(freqResultDICT[0][1])
+    
+    #
+    surprisal_triFLOAT = float(math.log2(freqResultDICT[0][1]))
+    surprisalLIST = []
+    surprisalLIST.append(surprisal_triFLOAT)
+    
+    dataDICT = pd.DataFrame({#'Word':Word_LIST,
+                           'NGRAM':surprisalLIST
+                           })
+                           
+    #data_path = "/Users/ting-hsin/Docs/Github/ICN_related/"
+    file_name = 'S007_Ngram_predictor.csv'
+    save_path = taggedRoot_DIR_STR + file_name
+    dataDICT.to_csv(save_path, sep = "," ,index = False , header = True, encoding = "UTF-8")
+    
+    """
+    # Load in the POS tagged jsonfile
+    with open (taggedRoot_DIR_STR + "S007_dePOS_LIST.json", "r", encoding = "utf-8") as jfile:
+        sub_posLIST = json.load(jfile)
+        pprint(sub_posLIST)
+        blankPOSLIST = []
+        for n_posLIST in sub_posLIST:
+            blankPOSLIST.append(n_posLIST[-1])
+            trigramLIST = list(nltk.ngrams(posLIST, 3))
+            print()
+        
+    
+    # Get the probabilities from the trigram model (trained by COCA)
+    freqResultDICT = sorted(dict(corpus_freqDICT['nn2', 'vbdr']).items(), key=lambda x:-1*x[1])
+    print(freqResultDICT[0][1])
+    
+    #
+    surprisal_triFLOAT = float(math.log2(freqResultDICT[0][1])))
+"""
             
             
     """
@@ -164,5 +201,5 @@ if __name__ == "__main__":
     
     #POS_surprisalFLOAT = targetPOS_countINT/prev2w_countINT
     
-    # suprisal
+    # suprisal = -log2(P(w|C)
     """
