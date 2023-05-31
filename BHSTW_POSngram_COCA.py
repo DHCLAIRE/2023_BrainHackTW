@@ -83,7 +83,7 @@ if __name__ == "__main__":
     
     all_cleanedLIST = []
     all_POStagLIST = []
-    for fileN_STR in filenamesLIST[:3]:#[:3]:
+    for fileN_STR in filenamesLIST[:10]:
         print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         cleanedLIST = []
         POStagLIST = []
         # Split the tagged txt into LIST
-        for rowSTR in rawLIST[:10]:#[:50]:
+        for rowSTR in rawLIST[:50]:
             tmpLIST = rowSTR.split(" ")
             # remove blurred raw txt, and append the rest of it
             if len(tmpLIST[-1]) == 0:
@@ -130,16 +130,44 @@ if __name__ == "__main__":
         for pos3 in corpus_freqDICT[pos1_pos2]:
             corpus_freqDICT[pos1_pos2][pos3] /= total_count
             #print(type(corpus_freqDICT))
-            pprint(corpus_freqDICT)
-
-    # Get the probabilities from the trigram model (trained by COCA)  'nn2', 'vbdr'
-    freqResultDICT = sorted(dict(corpus_freqDICT['nn2', 'vbdr']).items(), key=lambda x:-1*x[1])
-    print(freqResultDICT[0][1])
+            #pprint(corpus_freqDICT)
     
-    #
-    surprisal_triFLOAT = float(math.log2(freqResultDICT[0][1]))
+    # Load in the sub's POS tagged jsonfile
+    with open (taggedRoot_DIR_STR + "S007_dePOS_LIST.json", "r", encoding = "utf-8") as jfile:
+        sub_posLIST = json.load(jfile)
+        pprint(sub_posLIST)
+        blankPOSLIST = []
+        for n_posLIST in sub_posLIST:
+            blankPOSLIST.append(n_posLIST[-1])
+            trigramLIST = list(nltk.ngrams(posLIST, 3))
+            print()
+    
+    """
+    #testingLIST = [['vvi', 'appge'], ['nn2', 'vbdr'], ['np1', 'cc']]  #[('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)] ; [('jj', 1.0)] ; [('np1', 0.6666666666666666), ('pphs1', 0.3333333333333333)]
+    ans_LIST = [['vvi', 'appge', 'nn1'], ['nn2', 'vbdr', 'jj'], ['np1', 'cc', 'np1']]
+    # Calculated the surprisal from trained COCA corpus
     surprisalLIST = []
-    surprisalLIST.append(surprisal_triFLOAT)
+    for targetPOS_LIST in ans_LIST:
+        # Get the probabilities from the trigram model (trained by COCA)  'nn2', 'vbdr'
+        freqResultDICT = sorted(dict(corpus_freqDICT[targetPOS_LIST[0], targetPOS_LIST[1]]).items(), key=lambda x:-1*x[1])
+        #print(freqResultDICT, type(freqResultDICT)) # lIST = [('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)]
+        #print(freqResultDICT[0], type(freqResultDICT[0])) #tuple = ('nn1', 0.6666666666666666)
+        #print(freqResultDICT[0][1], type(freqResultDICT[0][1])) #float = 1.0
+        
+        # Match the wanted trigram to its following 
+        for posTUPLE in freqResultDICT:
+            print("HII__", posTUPLE)
+            posSTR = posTUPLE[0]
+            print("NOW:", posSTR)
+            if posSTR == targetPOS_LIST[-1]:
+                probFLOAT = posTUPLE[1]
+                print(targetPOS_LIST[-1], posSTR)
+            else:
+                print("NADA")
+
+        # log2 to get the surprisal from probabilites
+        surprisal_triFLOAT = float(math.log2(probFLOAT))
+        surprisalLIST.append(surprisal_triFLOAT)
     
     dataDICT = pd.DataFrame({#'Word':Word_LIST,
                            'NGRAM':surprisalLIST
@@ -149,28 +177,9 @@ if __name__ == "__main__":
     file_name = 'S007_Ngram_predictor.csv'
     save_path = taggedRoot_DIR_STR + file_name
     dataDICT.to_csv(save_path, sep = "," ,index = False , header = True, encoding = "UTF-8")
-    
     """
-    # Load in the POS tagged jsonfile
-    with open (taggedRoot_DIR_STR + "S007_dePOS_LIST.json", "r", encoding = "utf-8") as jfile:
-        sub_posLIST = json.load(jfile)
-        pprint(sub_posLIST)
-        blankPOSLIST = []
-        for n_posLIST in sub_posLIST:
-            blankPOSLIST.append(n_posLIST[-1])
-            trigramLIST = list(nltk.ngrams(posLIST, 3))
-            print()
-        
-    
-    # Get the probabilities from the trigram model (trained by COCA)
-    freqResultDICT = sorted(dict(corpus_freqDICT['nn2', 'vbdr']).items(), key=lambda x:-1*x[1])
-    print(freqResultDICT[0][1])
-    
-    #
-    surprisal_triFLOAT = float(math.log2(freqResultDICT[0][1])))
-"""
             
-            
+################### REDUNDANT ##########
     """
         #the first time we see a particular word we create a key:value pair
         if infoLIST[1] not in corpus_freqDICT:
@@ -178,10 +187,7 @@ if __name__ == "__main__":
         #when we see a word subsequent times, we add (+=) one to the frequency count
         else:
             corpus_freqDICT[infoLIST[1]] += 1
-            """
-
-            
-            
+    """
     
     """
     # TRIGRAM ## example commands from the CUPOY NLP course: n-gram tutorial
