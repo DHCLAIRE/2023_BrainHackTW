@@ -135,40 +135,64 @@ if __name__ == "__main__":
     # Load in the sub's POS tagged jsonfile
     with open (taggedRoot_DIR_STR + "S007_dePOS_LIST.json", "r", encoding = "utf-8") as jfile:
         sub_posLIST = json.load(jfile)
-        pprint(sub_posLIST)
+        #pprint(sub_posLIST)
         blankPOSLIST = []
-        for n_posLIST in sub_posLIST:
-            blankPOSLIST.append(n_posLIST[-1])
-            trigramLIST = list(nltk.ngrams(posLIST, 3))
-            print()
-    
-    """
-    #testingLIST = [['vvi', 'appge'], ['nn2', 'vbdr'], ['np1', 'cc']]  #[('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)] ; [('jj', 1.0)] ; [('np1', 0.6666666666666666), ('pphs1', 0.3333333333333333)]
-    ans_LIST = [['vvi', 'appge', 'nn1'], ['nn2', 'vbdr', 'jj'], ['np1', 'cc', 'np1']]
+        for n_posLIST in sub_posLIST:   #n_posLIST = ['0000032', '501', '.', 'y']
+            if '"' == n_posLIST[-1]:
+                pass
+            else:
+                blankPOSLIST.append(n_posLIST[-1])
+        print(blankPOSLIST)
+        print(len(blankPOSLIST))
+            
+            
+        ## To group the trigram per 3 pos
+        item_numINT = 3
+        n_pos_trigramLIST = []
+        for pos_count in range(0, len(blankPOSLIST)):
+            tmp_posLIST = blankPOSLIST[pos_count:pos_count+item_numINT]
+            if len(tmp_posLIST) <3:
+                pass
+            else:
+                n_pos_trigramLIST.append(tmp_posLIST)
+            
+            
+        pprint(n_pos_trigramLIST)
+        pprint(len(n_pos_trigramLIST))
+
+    ans_LIST = n_pos_trigramLIST # [['vvi', 'appge', 'nn1'], ['nn2', 'vbdr', 'jj'], ['np1', 'cc', 'np1']] #[('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)] ; [('jj', 1.0)] ; [('np1', 0.6666666666666666), ('pphs1', 0.3333333333333333)]
     # Calculated the surprisal from trained COCA corpus
     surprisalLIST = []
     for targetPOS_LIST in ans_LIST:
         # Get the probabilities from the trigram model (trained by COCA)  'nn2', 'vbdr'
-        freqResultDICT = sorted(dict(corpus_freqDICT[targetPOS_LIST[0], targetPOS_LIST[1]]).items(), key=lambda x:-1*x[1])
-        #print(freqResultDICT, type(freqResultDICT)) # lIST = [('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)]
-        #print(freqResultDICT[0], type(freqResultDICT[0])) #tuple = ('nn1', 0.6666666666666666)
-        #print(freqResultDICT[0][1], type(freqResultDICT[0][1])) #float = 1.0
+        freqResultLIST = sorted(dict(corpus_freqDICT[targetPOS_LIST[0], targetPOS_LIST[1]]).items(), key=lambda x:-1*x[1])
+        #print(targetPOS_LIST[:1], freqResultLIST)
+        #print(freqResultLIST, type(freqResultLIST)) # lIST = [('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)]
+        #print(freqResultLIST[0], type(freqResultLIST[0])) #tuple = ('nn1', 0.6666666666666666)
+        #print(freqResultLIST[0][1], type(freqResultLIST[0][1])) #float = 1.0
+        pos3rdSTR = targetPOS_LIST[-1]
+        if freqResultLIST.index(pos3rdSTR) == True:
+            
         
+        print(pos3rdSTR)
         # Match the wanted trigram to its following 
-        for posTUPLE in freqResultDICT:
-            print("HII__", posTUPLE)
+        for posTUPLE in freqResultLIST:
+            #print("HII__", posTUPLE)
             posSTR = posTUPLE[0]
-            print("NOW:", posSTR)
-            if posSTR == targetPOS_LIST[-1]:
-                probFLOAT = posTUPLE[1]
-                print(targetPOS_LIST[-1], posSTR)
+            #print("NOW:", posSTR)
+            """
+            if targetPOS_LIST[-1] == posSTR:
+                probFLOAT = posTUPLE[1]  #print(targetPOS_LIST[-1], posSTR)
+                # log2 to get the surprisal from probabilites
+                #surprisal_triFLOAT = abs(float(math.log2(probFLOAT)))
+                #surprisalLIST.append(surprisal_triFLOAT)
             else:
-                print("NADA")
-
-        # log2 to get the surprisal from probabilites
-        surprisal_triFLOAT = float(math.log2(probFLOAT))
-        surprisalLIST.append(surprisal_triFLOAT)
-    
+                probFLOAT = 1
+                # log2 to get the surprisal from probabilites
+            surprisal_triFLOAT = abs(float(math.log2(probFLOAT)))
+            surprisalLIST.append(surprisal_triFLOAT)
+                
+    print(len(surprisalLIST))
     dataDICT = pd.DataFrame({#'Word':Word_LIST,
                            'NGRAM':surprisalLIST
                            })
@@ -177,7 +201,7 @@ if __name__ == "__main__":
     file_name = 'S007_Ngram_predictor.csv'
     save_path = taggedRoot_DIR_STR + file_name
     dataDICT.to_csv(save_path, sep = "," ,index = False , header = True, encoding = "UTF-8")
-    """
+"""
             
 ################### REDUNDANT ##########
     """
