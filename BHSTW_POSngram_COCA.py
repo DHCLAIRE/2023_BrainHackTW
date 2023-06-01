@@ -179,48 +179,50 @@ if __name__ == "__main__":
         # Match the wanted trigram to its following
         if len(freqResultLIST) > 1:
             posNumLIST = list(range(len(freqResultLIST)))
+            #print("YES, but prob not sure")
             
-            print("YES, but prob not sure")
             for i in range(len(freqResultLIST)):
                 #print(i+1,":", freqResultLIST[i])
                 if targetPOS_LIST[-1] == freqResultLIST[i][0]:
-                    print("YUP, This one", freqResultLIST[i][1])
+                    #print("YUP, This one", freqResultLIST[i][1])
                     probFLOAT = freqResultLIST[i][1]
                     tmpProbLIST = [probFLOAT]
-                    break
+                    
                 else:
-                    print("still NOPE, prob = ", 0)
-                    probFLOAT = 0
+                    #print("still NOPE, prob = ", 0)
+                    probFLOAT = 1
                     tmpProbLIST = [probFLOAT]
                     pass
-                
         else:
-            probFLOAT = 0
-            print("No prob = ", probFLOAT)
+            probFLOAT = 1
+            #print("No prob = ", probFLOAT)
             tmpProbLIST = [probFLOAT]
         #print(tmpProbLIST)
         #print(len(tmpProbLIST))
-        surprisalLIST.append(tmpProbLIST)
+        surprisalLIST.extend(tmpProbLIST)
     print(surprisalLIST)
     print(len(surprisalLIST))
     
+    
     # Turn probablity into surprisal
     done_surprisalLIST = []
-    for probLIST in surprisalLIST:
-        surprisal_triFLOAT = abs(float(math.log2(probLIST[0])))
-        done_surprisalLIST.extend([0.0, 0.0])
+    for probSTR in surprisalLIST:
+        #print(probLIST)
+        tmpposFLOAT = float(probSTR)
+        surprisal_triFLOAT = abs(float(math.log2(tmpposFLOAT)))
+        #done_surprisalLIST.extend([0.0, 0.0])
         done_surprisalLIST.append(surprisal_triFLOAT)
     print(done_surprisalLIST)
     print(len(done_surprisalLIST))
+    
     dataDICT = pd.DataFrame({#'Word':Word_LIST,
-                           'NGRAM':surprisalLIST
+                           'NGRAM':done_surprisalLIST
                            })
                            
     #data_path = "/Users/ting-hsin/Docs/Github/ICN_related/"
     file_name = 'S007_Ngram_predictor.csv'
     save_path = taggedRoot_DIR_STR + file_name
     dataDICT.to_csv(save_path, sep = "," ,index = False , header = True, encoding = "UTF-8")
-"""
             
 ################### REDUNDANT ##########
     """
