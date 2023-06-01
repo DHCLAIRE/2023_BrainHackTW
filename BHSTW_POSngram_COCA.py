@@ -83,7 +83,7 @@ if __name__ == "__main__":
     
     all_cleanedLIST = []
     all_POStagLIST = []
-    for fileN_STR in filenamesLIST[:10]:
+    for fileN_STR in filenamesLIST: #[:10]:
         print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         cleanedLIST = []
         POStagLIST = []
         # Split the tagged txt into LIST
-        for rowSTR in rawLIST[:50]:
+        for rowSTR in rawLIST:#[:50]:
             tmpLIST = rowSTR.split(" ")
             # remove blurred raw txt, and append the rest of it
             if len(tmpLIST[-1]) == 0:
@@ -133,7 +133,7 @@ if __name__ == "__main__":
             #pprint(corpus_freqDICT)
     
     # Load in the sub's POS tagged jsonfile
-    with open (taggedRoot_DIR_STR + "S007_dePOS_LIST.json", "r", encoding = "utf-8") as jfile:
+    with open (taggedRoot_DIR_STR + "S009_dePOS_LIST.json", "r", encoding = "utf-8") as jfile:
         sub_posLIST = json.load(jfile)
         #pprint(sub_posLIST)
         blankPOSLIST = []
@@ -220,7 +220,7 @@ if __name__ == "__main__":
                            })
                            
     #data_path = "/Users/ting-hsin/Docs/Github/ICN_related/"
-    file_name = 'S007_Ngram_predictor.csv'
+    file_name = 'S009_Ngram_predictor.csv'
     save_path = taggedRoot_DIR_STR + file_name
     dataDICT.to_csv(save_path, sep = "," ,index = False , header = True, encoding = "UTF-8")
             
