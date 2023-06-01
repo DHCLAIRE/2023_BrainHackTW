@@ -163,6 +163,8 @@ if __name__ == "__main__":
     ans_LIST = n_pos_trigramLIST # [['vvi', 'appge', 'nn1'], ['nn2', 'vbdr', 'jj'], ['np1', 'cc', 'np1']] #[('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)] ; [('jj', 1.0)] ; [('np1', 0.6666666666666666), ('pphs1', 0.3333333333333333)]
     # Calculated the surprisal from trained COCA corpus
     surprisalLIST = []
+    pos3rd_DICT = {}
+    print(len(ans_LIST))
     for targetPOS_LIST in ans_LIST:
         # Get the probabilities from the trigram model (trained by COCA)  'nn2', 'vbdr'
         freqResultLIST = sorted(dict(corpus_freqDICT[targetPOS_LIST[0], targetPOS_LIST[1]]).items(), key=lambda x:-1*x[1])
@@ -170,17 +172,33 @@ if __name__ == "__main__":
         #print(freqResultLIST, type(freqResultLIST)) # lIST = [('nn1', 0.6666666666666666), ('jj', 0.3333333333333333)]
         #print(freqResultLIST[0], type(freqResultLIST[0])) #tuple = ('nn1', 0.6666666666666666)
         #print(freqResultLIST[0][1], type(freqResultLIST[0][1])) #float = 1.0
-        pos3rdSTR = targetPOS_LIST[-1]
-        if freqResultLIST.index(pos3rdSTR) == True:
-            
-        
-        print(pos3rdSTR)
+        #pos3rd_DICT[targetPOS_LIST[0:2]] = {freqResultLIST}
+        tmpLIST2 = []
+        tmpDICT = {}
         # Match the wanted trigram to its following 
         for posTUPLE in freqResultLIST:
-            #print("HII__", posTUPLE)
-            posSTR = posTUPLE[0]
-            #print("NOW:", posSTR)
+            if len(posTUPLE) <1:
+                tmpDICT = {"N/A":float(1)}
+            else:
+                pass
+        tmpDICT[targetPOS_LIST[-1]] = dict(posTUPLE)
+        print(tmpDICT)
+            #posedLIST = list(posTUPLE)
+            #tmpLIST2.append(posedLIST)
+        #tuple2listPOS_LIST.append(tmpLIST2)
+    #print(tuple2listPOS_LIST)
+    #print(len(tuple2listPOS_LIST))
+    #print(tmpDICT)
+    """
+    for smallposLIST in tuple2listPOS_LIST:
+        print(smallposLIST)
+        if len(smallposLIST) < 1:
+            probFLOAT = 1
+            surprisal_triFLOAT = abs(float(math.log2(probFLOAT)))
+        else:
+            if 
             """
+    """
             if targetPOS_LIST[-1] == posSTR:
                 probFLOAT = posTUPLE[1]  #print(targetPOS_LIST[-1], posSTR)
                 # log2 to get the surprisal from probabilites
