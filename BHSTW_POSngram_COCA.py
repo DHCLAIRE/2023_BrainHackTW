@@ -175,20 +175,17 @@ if __name__ == "__main__":
         #pos3rd_DICT[targetPOS_LIST[0:2]] = {freqResultLIST}
         tmpLIST2 = []
         tmpDICT = {}
+        tmpProbLIST = [0.0, 0.0]
         # Match the wanted trigram to its following 
-        for posTUPLE in freqResultLIST:
-            if len(posTUPLE) <1:
-                tmpDICT = {"N/A":float(1)}
+        for i in range(len(freqResultLIST)):
+            if targetPOS_LIST[-1] == freqResultLIST[i][0]:
+                probFLOAT = freqResultLIST[i][1]
+                tmpProbLIST.append(probFLOAT)
             else:
-                pass
-        tmpDICT[targetPOS_LIST[-1]] = dict(posTUPLE)
-        print(tmpDICT)
-            #posedLIST = list(posTUPLE)
-            #tmpLIST2.append(posedLIST)
-        #tuple2listPOS_LIST.append(tmpLIST2)
-    #print(tuple2listPOS_LIST)
-    #print(len(tuple2listPOS_LIST))
-    #print(tmpDICT)
+                probFLOAT = 1
+                tmpProbLIST.append(probFLOAT)
+        print(tmpProbLIST)
+        print(len(tmpProbLIST))
     """
     for smallposLIST in tuple2listPOS_LIST:
         print(smallposLIST)
