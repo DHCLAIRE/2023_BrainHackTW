@@ -66,7 +66,7 @@ if __name__ == "__main__":
     # Go through all the files
     ## Creat the data path from the folder
     txtRoot_DIR = "/Users/neuroling/Documents/coca/coca-wlp/"
-    taggedRoot_DIR_STR = "/Volumes/Neurolang_1/Project_Assistant/2021_Ongoing/2020_LTTC/Experiment_materials/LTTC_MEG/"
+    taggedRoot_DIR_STR = "/Users/neuroling/Downloads/DINGHSIN_Results/LTTC_MEG/"
     txtFile_DIR_LIST = []
     for folder in Path(txtRoot_DIR).iterdir():
         if re.match(r'wlp_*', folder.name):
@@ -175,39 +175,43 @@ if __name__ == "__main__":
         #pos3rd_DICT[targetPOS_LIST[0:2]] = {freqResultLIST}
         tmpLIST2 = []
         tmpDICT = {}
-        tmpProbLIST = [0.0, 0.0]
-        # Match the wanted trigram to its following 
-        for i in range(len(freqResultLIST)):
-            if targetPOS_LIST[-1] == freqResultLIST[i][0]:
-                probFLOAT = freqResultLIST[i][1]
-                tmpProbLIST.append(probFLOAT)
-            else:
-                probFLOAT = 1
-                tmpProbLIST.append(probFLOAT)
-        print(tmpProbLIST)
-        print(len(tmpProbLIST))
-    """
-    for smallposLIST in tuple2listPOS_LIST:
-        print(smallposLIST)
-        if len(smallposLIST) < 1:
-            probFLOAT = 1
-            surprisal_triFLOAT = abs(float(math.log2(probFLOAT)))
-        else:
-            if 
-            """
-    """
-            if targetPOS_LIST[-1] == posSTR:
-                probFLOAT = posTUPLE[1]  #print(targetPOS_LIST[-1], posSTR)
-                # log2 to get the surprisal from probabilites
-                #surprisal_triFLOAT = abs(float(math.log2(probFLOAT)))
-                #surprisalLIST.append(surprisal_triFLOAT)
-            else:
-                probFLOAT = 1
-                # log2 to get the surprisal from probabilites
-            surprisal_triFLOAT = abs(float(math.log2(probFLOAT)))
-            surprisalLIST.append(surprisal_triFLOAT)
+        tmpProbLIST = []
+        # Match the wanted trigram to its following
+        if len(freqResultLIST) > 1:
+            posNumLIST = list(range(len(freqResultLIST)))
+            
+            print("YES, but prob not sure")
+            for i in range(len(freqResultLIST)):
+                #print(i+1,":", freqResultLIST[i])
+                if targetPOS_LIST[-1] == freqResultLIST[i][0]:
+                    print("YUP, This one", freqResultLIST[i][1])
+                    probFLOAT = freqResultLIST[i][1]
+                    tmpProbLIST = [probFLOAT]
+                    break
+                else:
+                    print("still NOPE, prob = ", 0)
+                    probFLOAT = 0
+                    tmpProbLIST = [probFLOAT]
+                    pass
                 
+        else:
+            probFLOAT = 0
+            print("No prob = ", probFLOAT)
+            tmpProbLIST = [probFLOAT]
+        #print(tmpProbLIST)
+        #print(len(tmpProbLIST))
+        surprisalLIST.append(tmpProbLIST)
+    print(surprisalLIST)
     print(len(surprisalLIST))
+    
+    # Turn probablity into surprisal
+    done_surprisalLIST = []
+    for probLIST in surprisalLIST:
+        surprisal_triFLOAT = abs(float(math.log2(probLIST[0])))
+        done_surprisalLIST.extend([0.0, 0.0])
+        done_surprisalLIST.append(surprisal_triFLOAT)
+    print(done_surprisalLIST)
+    print(len(done_surprisalLIST))
     dataDICT = pd.DataFrame({#'Word':Word_LIST,
                            'NGRAM':surprisalLIST
                            })
