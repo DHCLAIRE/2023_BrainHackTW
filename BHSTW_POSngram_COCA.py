@@ -83,7 +83,7 @@ if __name__ == "__main__":
     
     all_cleanedLIST = []
     all_POStagLIST = []
-    for fileN_STR in filenamesLIST: #[:10]:
+    for fileN_STR in filenamesLIST[:10]:
         print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
             rawLIST = fileTXT.read().replace("\t", " ").split("\n")
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         cleanedLIST = []
         POStagLIST = []
         # Split the tagged txt into LIST
-        for rowSTR in rawLIST:#[:50]:
+        for rowSTR in rawLIST[:50]:
             tmpLIST = rowSTR.split(" ")
             # remove blurred raw txt, and append the rest of it
             if len(tmpLIST[-1]) == 0:
