@@ -86,7 +86,7 @@ if __name__ == "__main__":
     for fileN_STR in filenamesLIST[:10]:
         print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
-            rawLIST = fileTXT.read().replace("\t", " ").split("\n")
+            rawLIST = fileTXT.read().replace("\t", " ").split("\n")  # read() >> change to readlines()
             #pprint(rawLIST)#[:50])
             #print(type(rawLIST))
             #print(len(rawLIST))
