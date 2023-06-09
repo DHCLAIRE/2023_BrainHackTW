@@ -61,6 +61,20 @@ def corpus_freq(dir_name,lemma_d):
     return(freq)
 """
 
+def LISTblankEraser(rawLIST):
+    '''
+    Remove the blank that inside the list
+    '''
+    newrawLIST = []
+    for row in rawLIST:
+        if len(row) == 0:
+            rawLIST.pop(rawLIST.index(row))
+        else:
+            pass
+    newrawLIST = rawLIST
+    #print(len(newrawLIST))
+    return newrawLIST
+
 
 if __name__ == "__main__":
     # Go through all the files
@@ -71,7 +85,7 @@ if __name__ == "__main__":
     for folder in Path(txtRoot_DIR).iterdir():
         if re.match(r'wlp_*', folder.name):
             txtFile_DIR_LIST.append(folder.name)
-    pprint(txtFile_DIR_LIST)
+    #pprint(txtFile_DIR_LIST)
     ## Find all txt files
     All_txtNameLIST = []
     for txtFolderSTR in txtFile_DIR_LIST:
@@ -79,21 +93,30 @@ if __name__ == "__main__":
         filenamesLIST = glob.glob(everytxt_DIR_STR + "/*.txt")
         All_txtNameLIST.extend(filenamesLIST)
     #print(type(All_txtNameLIST))
-    print(len(All_txtNameLIST))
+    #print(len(All_txtNameLIST))
     
     all_cleanedLIST = []
     all_POStagLIST = []
     for fileN_STR in filenamesLIST[:10]:
-        print(fileN_STR)
+        #print(fileN_STR)
         with open (fileN_STR, errors="ignore", encoding="utf-8") as fileTXT:  # Use all "wlp-" tagged txt files, it contains POS taggings
-            rawLIST = fileTXT.read().replace("\t", " ").split("\n")  # read() >> change to readlines()
+            rawLIST = []
+            for linesSTR in fileTXT.readlines()[:5]:  #rawLIST = fileTXT.read().replace("\t", " ").split("\n")  # read() >> change to readlines() >> cost too may spaces
+                print(linesSTR)
+                tmplineLIST = linesSTR.replace("\t", " ").split(" ")#.split("\n")
+                tmplineLIST = LISTblankEraser(tmplineLIST)
+                print(tmplineLIST)
+                rawLIST.append(tmplineLIST)
+            print(rawLIST)
+            #print(type(rawLIST))
+            
             #pprint(rawLIST)#[:50])
             #print(type(rawLIST))
             #print(len(rawLIST))
         cleanedLIST = []
         POStagLIST = []
         # Split the tagged txt into LIST
-        for rowSTR in rawLIST[:50]:
+        for rowSTR in rawLIST:
             tmpLIST = rowSTR.split(" ")
             # remove blurred raw txt, and append the rest of it
             if len(tmpLIST[-1]) == 0:
